@@ -57,6 +57,18 @@ if (Meteor.isClient) {
             Meteor.call("randomizeScore");
         }
     });
+
+    Template.leaderboard.events({
+        'click input.addPlayer': function () {
+            inputName = window.prompt("Enter new player's name","Player");
+            if (inputName != null && inputName != ""){
+                Meteor.call("addPlayer",inputName);
+            }else{
+                window.alert("Please enter a valid name");
+            }
+        }
+    });
+
 }
 
 // On server startup, create some players if the database is empty.
@@ -82,6 +94,9 @@ if (Meteor.isServer) {
             players.forEach(function (player) {
                 Players.update({name: player.name}, {$set: {score: Math.floor(Random.fraction() * 10) * 5}});
             });
+        },
+        addPlayer: function(inputName){
+            Players.insert({name: inputName, score: 0});
         }
     });
 }
