@@ -69,12 +69,12 @@ if (Meteor.isServer) {
     }
   });
 
+  Meteor.methods({
+        randomizeScore: function () {
+            Players.update({},{score: Math.floor(Random.fraction()*10)*5});
+        }
+    });
 }
 
-Meteor.methods({
-    randomizeScore: function () {
-        Players.update({},{score: Math.floor(Random.fraction()*10)*5});
-    }
-});
 
 
