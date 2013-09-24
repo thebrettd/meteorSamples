@@ -30,6 +30,12 @@ if (Meteor.isClient) {
         }
     });
 
+    Template.leaderboard.events({
+        'click input.deletePlayer': function () {
+            Players.remove(Session.get("selected_player"));
+        }
+    });
+
     Template.player.events({
         'click': function () {
             Session.set("selected_player", this._id);
