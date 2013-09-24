@@ -60,10 +60,10 @@ if (Meteor.isClient) {
 
     Template.leaderboard.events({
         'click input.addPlayer': function () {
-            inputName = window.prompt("Enter new player's name","Player");
-            if (inputName != null && inputName != ""){
-                Meteor.call("addPlayer",inputName);
-            }else{
+            inputName = window.prompt("Enter new player's name", "Player");
+            if (inputName != null && inputName != "") {
+                Meteor.call("addPlayer", inputName);
+            } else {
                 window.alert("Please enter a valid name");
             }
         }
@@ -95,7 +95,7 @@ if (Meteor.isServer) {
                 Players.update({name: player.name}, {$set: {score: Math.floor(Random.fraction() * 10) * 5}});
             });
         },
-        addPlayer: function(inputName){
+        addPlayer: function (inputName) {
             Players.insert({name: inputName, score: 0});
         }
     });
