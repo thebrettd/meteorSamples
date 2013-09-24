@@ -64,14 +64,17 @@ if (Meteor.isServer) {
                    "Carl Friedrich Gauss",
                    "Nikola Tesla",
                    "Claude Shannon"];
+
       for (var i = 0; i < names.length; i++)
-        randomizeScore();
+          Players.insert({name: names[i]});
     }
+      Meteor.call("randomizeScore");
   });
 
   Meteor.methods({
         randomizeScore: function () {
-            Players.update({},{score: Math.floor(Random.fraction()*10)*5});
+            //todo: foreach here to generate more than 1 random number
+            Players.update({},{$set: {score: Math.floor(Random.fraction()*10)*5}},{multi: true});
         }
     });
 }
