@@ -49,7 +49,7 @@ if (Meteor.isClient) {
 
     Template.leaderboard.events({
         'click input.randomizeScore': function () {
-            Meteor.call(randomizeScore());
+            Meteor.call("randomizeScore");
         }
     });
 }
