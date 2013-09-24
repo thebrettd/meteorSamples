@@ -4,8 +4,15 @@
 Players = new Meteor.Collection("players");
 
 if (Meteor.isClient) {
+
+  Session.set("mySort","score");
+
   Template.leaderboard.players = function () {
-    return Players.find({}, {sort: {score: -1, name: 1}});
+      if (Session.equals("mySort","score")){
+          return Players.find({}, {sort: {score: -1, name: 1}});
+      }else{
+          return Players.find({}, {sort: {name: 1, score: 1}});
+      }
   };
 
   Template.leaderboard.selected_name = function () {
@@ -28,6 +35,18 @@ if (Meteor.isClient) {
       Session.set("selected_player", this._id);
     }
   });
+
+    Template.leaderboard.events({
+        'click input.sortToggle': function () {
+            currSort = Session.get("mySort");
+            if(currSort == "name"){
+                Session.set("mySort", "score");
+            }else{
+                Session.set("mySort","name");
+            }
+        }
+    });
+
 }
 
 // On server startup, create some players if the database is empty.
