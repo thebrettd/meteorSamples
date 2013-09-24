@@ -38,8 +38,7 @@ if (Meteor.isClient) {
 
     Template.leaderboard.events({
         'click input.sortToggle': function () {
-            currSort = Session.get("mySort");
-            if (currSort == "name") {
+            if (Session.get("mySort") == "name") {
                 Session.set("mySort", "score");
             } else {
                 Session.set("mySort", "name");
