@@ -47,6 +47,11 @@ if (Meteor.isClient) {
         }
     });
 
+    Template.leaderboard.events({
+        'click input.randomizeScore': function () {
+            Meteor.call(randomizeScore());
+        }
+    });
 }
 
 // On server startup, create some players if the database is empty.
@@ -60,7 +65,16 @@ if (Meteor.isServer) {
                    "Nikola Tesla",
                    "Claude Shannon"];
       for (var i = 0; i < names.length; i++)
-        Players.insert({name: names[i], score: Math.floor(Random.fraction()*10)*5});
+        randomizeScore();
     }
   });
+
 }
+
+Meteor.methods({
+    randomizeScore: function () {
+        Players.update({},{score: Math.floor(Random.fraction()*10)*5});
+    }
+});
+
+
